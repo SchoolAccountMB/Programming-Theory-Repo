@@ -13,7 +13,7 @@ public class Click : MonoBehaviour
             {
                 if (hit.transform.gameObject.CompareTag("Enemy"))
                 {
-                    Destroy(hit.transform.gameObject);
+                    hit.transform.GetComponent<Enemy>().LoseHealth();
                 }
             }
         }
