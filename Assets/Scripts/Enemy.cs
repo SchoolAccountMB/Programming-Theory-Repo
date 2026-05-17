@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     protected float speed;
 
+    protected Vector3 dir;
+
     private float maxSpawnX = 3.5f;
     private float maxSpawnZ = 1.0f;
 
@@ -23,17 +25,28 @@ public class Enemy : MonoBehaviour
         Move();
     }
 
-    private void Spawn()
+    protected void Spawn()
     {
         float randX = Random.Range(-maxSpawnX, maxSpawnX);
         float randZ = Random.Range(-maxSpawnZ, maxSpawnZ);
 
         transform.position = new Vector3(randX, 0, randZ);
+
+        SetRandomDir();
+    }
+
+    protected void SetRandomDir()
+    {
+        float dirX = Random.Range(-1.0f, 1.0f);
+        float dirZ = Random.Range(-1.0f, 1.0f);
+
+        dir = new Vector3(dirX, 0, dirZ);
+        dir.Normalize();
     }
 
     protected virtual void Move()
     {
-        transform.Translate(speed * Time.deltaTime, 0, 0);
+        transform.Translate(dir * speed * Time.deltaTime);
     }
 
     public void LoseHealth()
